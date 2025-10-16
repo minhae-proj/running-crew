@@ -1,0 +1,13 @@
+node_modules
+.git
+*.md
+running-crew.html
+running-crew-v2.html
+scripts
+chat-history.md
+deployment-plan.md
+design-option-a.md
+running-crew-plan.md
+DEPLOYMENT_GUIDE.md
+README.md
+.env.example

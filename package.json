@@ -2,16 +2,5 @@
   "name": "running-crew",
   "version": "1.0.0",
   "description": "러닝 크루 모집 플랫폼",
-  "type": "module",
-  "scripts": {
-    "dev": "python3 -m http.server 8000",
-    "build": "echo 'No build step required for static site'"
-  },
-  "keywords": [
-    "running",
-    "crew",
-    "recruitment"
-  ],
-  "author": "",
-  "license": "MIT"
+  "private": true
 }

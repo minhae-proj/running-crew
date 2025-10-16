@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>러닝 크루 모집 - 옵션 A</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* 헤더 */
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 36px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        /* 필터 섹션 */
+        .filter-section {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .filter-header h2 {
+            font-size: 18px;
+            color: #333;
+        }
+
+        .filter-reset {
+            background: none;
+            border: 2px solid #e9ecef;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #666;
+            transition: all 0.2s;
+        }
+
+        .filter-reset:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        .filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-group label {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .filter-group select {
+            padding: 10px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .filter-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        /* 코스 목록 */
+        .courses-section {
+            margin-bottom: 20px;
+        }
+
+        .courses-header {
+            background: white;
+            padding: 20px 25px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .courses-header h2 {
+            font-size: 20px;
+            color: #333;
+        }
+
+        .courses-count {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* 코스 카드 */
+        .course-card {
+            background: white;
+            border-radius: 16px;
+            padding: 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .course-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .course-card.expanded {
+            grid-column: 1 / -1;
+            transform: translateY(0);
+        }
+
+        .course-card.closed {
+            opacity: 0.6;
+        }
+
+        .course-basic {
+            padding: 25px;
+            cursor: pointer;
+        }
+
+        .course-card.expanded .course-basic {
+            cursor: default;
+            border-bottom: 2px solid #f8f9fa;
+        }
+
+        .course-location {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .course-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .course-info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .course-info-item {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .course-info-item strong {
+            color: #333;
+        }
+
+        .course-participants {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .participants-bar {
+            flex: 1;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .participants-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s;
+        }
+
+        .participants-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .course-toggle-btn {
+            width: 100%;
+            padding: 12px;
+            background: #f8f9fa;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: #667eea;
+            transition: all 0.2s;
+        }
+
+        .course-toggle-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .course-card.closed .course-toggle-btn {
+            background: #e9ecef;
+            color: #999;
+            cursor: not-allowed;
+        }
+
+        .course-card.closed .course-toggle-btn:hover {
+            background: #e9ecef;
+            color: #999;
+        }
+
+        /* 확장 콘텐츠 */
+        .course-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .course-card.expanded .course-details {
+            max-height: 2000px;
+        }
+
+        .course-details-content {
+            padding: 25px;
+            background: #f8f9fa;
+        }
+
+        .details-section {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .details-section h3 {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .course-description {
+            color: #666;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        /* 신청 폼 */
+        .apply-form {
+            display: grid;
+            gap: 15px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        /* 참가자 목록 */
+        .participants-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .participant-item {
+            background: #f8f9fa;
+            padding: 12px 16px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .participant-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .participant-info {
+            flex: 1;
+        }
+
+        .participant-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 15px;
+        }
+
+        .participant-level {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .participant-date {
+            color: #999;
+            font-size: 12px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 30px;
+            color: #999;
+        }
+
+        /* 배지 */
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-closed {
+            background: #e9ecef;
+            color: #999;
+        }
+
+        .badge-level {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .badge-level.medium {
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        .badge-level.high {
+            background: #fce4ec;
+            color: #c2185b;
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .filters {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏃‍♂️ 러닝 크루 모집</h1>
+            <p>함께 달릴 멤버를 찾습니다!</p>
+        </div>
+
+        <div class="filter-section">
+            <div class="filter-header">
+                <h2>🔍 필터</h2>
+                <button class="filter-reset" onclick="resetFilters()">초기화</button>
+            </div>
+            <div class="filters">
+                <div class="filter-group">
+                    <label>날짜</label>
+                    <select id="filter-date" onchange="applyFilters()">
+                        <option value="">전체</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>장소</label>
+                    <select id="filter-location" onchange="applyFilters()">
+                        <option value="">전체</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>레벨</label>
+                    <select id="filter-level" onchange="applyFilters()">
+                        <option value="">전체</option>
+                        <option value="초급">초급</option>
+                        <option value="중급">중급</option>
+                        <option value="고급">고급</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>거리</label>
+                    <select id="filter-distance" onchange="applyFilters()">
+                        <option value="">전체</option>
+                        <option value="3km">3km</option>
+                        <option value="5km">5km</option>
+                        <option value="7km">7km</option>
+                        <option value="10km">10km</option>
+                        <option value="15km">15km</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="courses-section">
+            <div class="courses-header">
+                <h2>코스 목록 <span class="courses-count" id="courses-count">0개</span></h2>
+            </div>
+            <div class="courses-grid" id="courses-grid">
+                <!-- 코스 카드가 여기에 동적으로 추가됩니다 -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 샘플 코스 데이터
+        const coursesData = [
+            {
+                id: 1,
+                title: "한강 여의도 아침 러닝",
+                location: "여의도",
+                date: "2025-10-18",
+                time: "07:00",
+                level: "초급",
+                distance: "5km",
+                maxParticipants: 10,
+                description: "초보자도 편하게 달릴 수 있는 평탄한 코스입니다. 여의도 공원을 한 바퀴 도는 루트로 아침 공기를 마시며 가볍게 달리기 좋습니다.",
+                participants: []
+            },
+            {
+                id: 2,
+                title: "올림픽공원 주말 러닝",
+                location: "올림픽공원",
+                date: "2025-10-19",
+                time: "06:00",
+                level: "중급",
+                distance: "10km",
+                maxParticipants: 15,
+                description: "올림픽공원의 넓은 코스를 활용한 중급자용 러닝입니다. 약간의 언덕이 있어 체력 향상에 좋습니다.",
+                participants: [
+                    { name: "김철수", level: "중급", joinedAt: "2025-10-15" },
+                    { name: "이영희", level: "중급", joinedAt: "2025-10-16" }
+                ]
+            },
+            {
+                id: 3,
+                title: "탄천 고급 러너 코스",
+                location: "탄천",
+                date: "2025-10-20",
+                time: "19:00",
+                level: "고급",
+                distance: "15km",
+                maxParticipants: 8,
+                description: "탄천 종주 코스로 장거리 러닝에 도전하는 고급 러너를 위한 코스입니다.",
+                participants: []
+            },
+            {
+                id: 4,
+                title: "반포 저녁 러닝",
+                location: "반포",
+                date: "2025-10-21",
+                time: "20:00",
+                level: "초급",
+                distance: "3km",
+                maxParticipants: 10,
+                description: "퇴근 후 가볍게 달리기 좋은 짧은 코스입니다. 반포한강공원의 야경을 즐기며 달릴 수 있습니다.",
+                participants: []
+            },
+            {
+                id: 5,
+                title: "뚝섬 아침 러닝",
+                location: "뚝섬",
+                date: "2025-10-22",
+                time: "07:00",
+                level: "중급",
+                distance: "7km",
+                maxParticipants: 12,
+                description: "뚝섬한강공원의 아름다운 코스를 따라 달리는 중급 러닝입니다.",
+                participants: [
+                    { name: "박민수", level: "중급", joinedAt: "2025-10-16" }
+                ]
+            },
+            {
+                id: 6,
+                title: "망원 주말 러닝",
+                location: "망원",
+                date: "2025-10-23",
+                time: "06:00",
+                level: "초급",
+                distance: "5km",
+                maxParticipants: 10,
+                description: "망원한강공원에서 여유롭게 달리는 초급 코스입니다.",
+                participants: []
+            },
+            {
+                id: 7,
+                title: "잠실 석촌호수 러닝",
+                location: "잠실",
+                date: "2025-10-24",
+                time: "19:00",
+                level: "초급",
+                distance: "3km",
+                maxParticipants: 8,
+                description: "석촌호수를 한 바퀴 도는 편안한 코스입니다.",
+                participants: []
+            },
+            {
+                id: 8,
+                title: "서울숲 자연 러닝",
+                location: "서울숲",
+                date: "2025-10-25",
+                time: "07:00",
+                level: "중급",
+                distance: "7km",
+                maxParticipants: 12,
+                description: "서울숲 공원을 중심으로 자연을 느끼며 달리는 코스입니다.",
+                participants: []
+            }
+        ];
+
+        let allCourses = JSON.parse(localStorage.getItem('runningCourses')) || coursesData;
+        let currentExpandedId = null;
+
+        // 페이지 로드 시 초기화
+        window.addEventListener('DOMContentLoaded', () => {
+            // 로컬 스토리지에서 데이터 로드
+            if (!localStorage.getItem('runningCourses')) {
+                localStorage.setItem('runningCourses', JSON.stringify(coursesData));
+            }
+
+            populateFilters();
+            renderCourses(allCourses);
+        });
+
+        // 필터 옵션 채우기
+        function populateFilters() {
+            const dates = [...new Set(allCourses.map(c => c.date))].sort();
+            const locations = [...new Set(allCourses.map(c => c.location))].sort();
+
+            const dateSelect = document.getElementById('filter-date');
+            dates.forEach(date => {
+                const option = document.createElement('option');
+                option.value = date;
+                option.textContent = formatDate(date);
+                dateSelect.appendChild(option);
+            });
+
+            const locationSelect = document.getElementById('filter-location');
+            locations.forEach(location => {
+                const option = document.createElement('option');
+                option.value = location;
+                option.textContent = location;
+                locationSelect.appendChild(option);
+            });
+        }
+
+        // 날짜 포맷
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            const days = ['일', '월', '화', '수', '목', '금', '토'];
+            return `${date.getMonth() + 1}월 ${date.getDate()}일 (${days[date.getDay()]})`;
+        }
+
+        // 필터 적용
+        function applyFilters() {
+            const dateFilter = document.getElementById('filter-date').value;
+            const locationFilter = document.getElementById('filter-location').value;
+            const levelFilter = document.getElementById('filter-level').value;
+            const distanceFilter = document.getElementById('filter-distance').value;
+
+            let filtered = allCourses;
+
+            if (dateFilter) {
+                filtered = filtered.filter(c => c.date === dateFilter);
+            }
+            if (locationFilter) {
+                filtered = filtered.filter(c => c.location === locationFilter);
+            }
+            if (levelFilter) {
+                filtered = filtered.filter(c => c.level === levelFilter);
+            }
+            if (distanceFilter) {
+                filtered = filtered.filter(c => c.distance === distanceFilter);
+            }
+
+            renderCourses(filtered);
+        }
+
+        // 필터 초기화
+        function resetFilters() {
+            document.getElementById('filter-date').value = '';
+            document.getElementById('filter-location').value = '';
+            document.getElementById('filter-level').value = '';
+            document.getElementById('filter-distance').value = '';
+            renderCourses(allCourses);
+        }
+
+        // 코스 렌더링
+        function renderCourses(courses) {
+            const grid = document.getElementById('courses-grid');
+            const countBadge = document.getElementById('courses-count');
+
+            countBadge.textContent = `${courses.length}개`;
+
+            if (courses.length === 0) {
+                grid.innerHTML = '<div class="empty-state"><p>조건에 맞는 코스가 없습니다.</p></div>';
+                return;
+            }
+
+            grid.innerHTML = courses.map(course => createCourseCard(course)).join('');
+        }
+
+        // 코스 카드 생성
+        function createCourseCard(course) {
+            const participantPercentage = (course.participants.length / course.maxParticipants) * 100;
+            const isClosed = course.participants.length >= course.maxParticipants;
+            const levelClass = course.level === '중급' ? 'medium' : course.level === '고급' ? 'high' : '';
+
+            return `
+                <div class="course-card ${isClosed ? 'closed' : ''}" data-id="${course.id}">
+                    <div class="course-basic" onclick="toggleCard(${course.id})">
+                        <div class="course-location">📍 ${course.location}</div>
+                        <h3 class="course-title">${course.title}</h3>
+
+                        <div class="course-info-grid">
+                            <div class="course-info-item">
+                                <strong>📅 일정:</strong><br>${formatDate(course.date)}
+                            </div>
+                            <div class="course-info-item">
+                                <strong>🕐 시간:</strong><br>${course.time}
+                            </div>
+                            <div class="course-info-item">
+                                <strong>🏃 레벨:</strong><br>
+                                <span class="badge badge-level ${levelClass}">${course.level}</span>
+                            </div>
+                            <div class="course-info-item">
+                                <strong>📏 거리:</strong><br>${course.distance}
+                            </div>
+                        </div>
+
+                        <div class="course-participants">
+                            <div class="participants-bar">
+                                <div class="participants-fill" style="width: ${participantPercentage}%"></div>
+                            </div>
+                            <div class="participants-text">
+                                ${course.participants.length} / ${course.maxParticipants}명
+                            </div>
+                        </div>
+
+                        <button class="course-toggle-btn" onclick="event.stopPropagation(); toggleCard(${course.id})">
+                            ${isClosed ? '마감' : '자세히 보기 ▼'}
+                        </button>
+                    </div>
+
+                    <div class="course-details">
+                        <div class="course-details-content">
+                            <div class="details-section">
+                                <h3>📝 코스 설명</h3>
+                                <p class="course-description">${course.description}</p>
+                            </div>
+
+                            ${!isClosed ? `
+                            <div class="details-section">
+                                <h3>✍️ 신청하기</h3>
+                                <form class="apply-form" onsubmit="submitApplication(event, ${course.id})">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>이름 *</label>
+                                            <input type="text" name="name" required placeholder="이름을 입력하세요">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>연락처 *</label>
+                                            <input type="tel" name="contact" required placeholder="010-1234-5678">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>러닝 레벨 *</label>
+                                            <select name="level" required>
+                                                <option value="">선택하세요</option>
+                                                <option value="초급">초급</option>
+                                                <option value="중급">중급</option>
+                                                <option value="고급">고급</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="submit-btn">신청하기</button>
+                                </form>
+                            </div>
+                            ` : ''}
+
+                            <div class="details-section">
+                                <h3>👥 참가 멤버 (${course.participants.length}명)</h3>
+                                <div class="participants-list">
+                                    ${course.participants.length > 0
+                                        ? course.participants.map(p => `
+                                            <div class="participant-item">
+                                                <div class="participant-avatar">${p.name.charAt(0)}</div>
+                                                <div class="participant-info">
+                                                    <div class="participant-name">${p.name}</div>
+                                                    <div class="participant-level">${p.level}</div>
+                                                </div>
+                                                <div class="participant-date">${formatDate(p.joinedAt)} 신청</div>
+                                            </div>
+                                        `).join('')
+                                        : '<div class="empty-state"><p>아직 신청한 멤버가 없습니다.</p></div>'
+                                    }
+                                </div>
+                            </div>
+
+                            <button class="course-toggle-btn" onclick="toggleCard(${course.id})">
+                                접기 ▲
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 카드 토글
+        function toggleCard(courseId) {
+            const card = document.querySelector(`[data-id="${courseId}"]`);
+            const isClosed = card.classList.contains('closed');
+
+            if (isClosed) return;
+
+            if (currentExpandedId === courseId) {
+                card.classList.remove('expanded');
+                currentExpandedId = null;
+            } else {
+                // 다른 카드 닫기
+                document.querySelectorAll('.course-card.expanded').forEach(c => {
+                    c.classList.remove('expanded');
+                });
+
+                card.classList.add('expanded');
+                currentExpandedId = courseId;
+
+                // 부드럽게 스크롤
+                setTimeout(() => {
+                    card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            }
+        }
+
+        // 신청 제출
+        function submitApplication(event, courseId) {
+            event.preventDefault();
+
+            const form = event.target;
+            const formData = new FormData(form);
+            const name = formData.get('name').trim();
+            const contact = formData.get('contact').trim();
+            const level = formData.get('level');
+
+            // 코스 찾기
+            const courseIndex = allCourses.findIndex(c => c.id === courseId);
+            const course = allCourses[courseIndex];
+
+            // 중복 확인
+            const isDuplicate = course.participants.some(p => p.name === name);
+            if (isDuplicate) {
+                alert('이미 신청한 이름입니다!');
+                return;
+            }
+
+            // 인원 확인
+            if (course.participants.length >= course.maxParticipants) {
+                alert('모집 인원이 마감되었습니다!');
+                return;
+            }
+
+            // 참가자 추가
+            course.participants.push({
+                name: name,
+                contact: contact,
+                level: level,
+                joinedAt: new Date().toISOString().split('T')[0]
+            });
+
+            // 로컬 스토리지 업데이트
+            localStorage.setItem('runningCourses', JSON.stringify(allCourses));
+
+            // 화면 업데이트
+            applyFilters();
+
+            // 카드 다시 확장
+            setTimeout(() => {
+                toggleCard(courseId);
+            }, 100);
+
+            alert('신청이 완료되었습니다!');
+        }
+    </script>
+</body>
+</html>

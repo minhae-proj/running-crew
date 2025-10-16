@@ -8,11 +8,12 @@
     <!-- Supabase CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <!-- 환경 변수 (배포 시 Vercel에서 주입) -->
+    <!-- 환경 변수 -->
     <script>
+        // Vercel 환경 변수는 빌드 시점에 주입되지 않으므로 직접 설정
         window.ENV = {
-            SUPABASE_URL: '__SUPABASE_URL__',
-            SUPABASE_ANON_KEY: '__SUPABASE_ANON_KEY__'
+            SUPABASE_URL: 'https://hvkwekourbmgpzvqmczb.supabase.co',
+            SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh2a3dla291cmJtZ3B6dnFtY3piIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA1ODk4NzQsImV4cCI6MjA3NjE2NTg3NH0.zhszwplHNlq5atKZc36yM6pmsOD0Y3KQfiGQU2I6xQk'
         };
     </script>
 

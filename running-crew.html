@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>러닝 크루 모집</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .info-section {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .info-item {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-item h3 {
+            color: #667eea;
+            font-size: 14px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-item p {
+            color: #333;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .apply-section {
+            padding: 30px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .apply-section h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn-apply {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-apply:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-apply:active {
+            transform: translateY(0);
+        }
+
+        .members-section {
+            padding: 30px;
+        }
+
+        .members-section h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .members-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .member-card {
+            background: #f8f9fa;
+            padding: 16px 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .member-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .member-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .member-info {
+            flex: 1;
+        }
+
+        .member-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .member-level {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .member-count {
+            background: #667eea;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+
+        .empty-state p {
+            font-size: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏃‍♂️ 러닝 크루 모집</h1>
+            <p>함께 달릴 멤버를 찾습니다!</p>
+        </div>
+
+        <div class="info-section">
+            <div class="info-grid">
+                <div class="info-item">
+                    <h3>장소</h3>
+                    <p id="location">한강공원 여의도</p>
+                </div>
+                <div class="info-item">
+                    <h3>일정</h3>
+                    <p id="schedule">매주 토요일 오전 7시</p>
+                </div>
+                <div class="info-item">
+                    <h3>거리</h3>
+                    <p id="distance">5km</p>
+                </div>
+                <div class="info-item">
+                    <h3>모집 인원</h3>
+                    <p><span id="current-count">0</span> / <span id="max-count">10</span>명</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="apply-section">
+            <h2>신청하기</h2>
+            <form id="apply-form">
+                <div class="form-group">
+                    <label for="name">이름</label>
+                    <input type="text" id="name" name="name" required placeholder="이름을 입력하세요">
+                </div>
+                <div class="form-group">
+                    <label for="level">러닝 레벨</label>
+                    <input type="text" id="level" name="level" required placeholder="예: 초급, 중급, 고급">
+                </div>
+                <button type="submit" class="btn-apply">신청하기</button>
+            </form>
+        </div>
+
+        <div class="members-section">
+            <h2>참가 멤버 <span class="member-count" id="member-count-badge">0명</span></h2>
+            <div id="members-list" class="members-list">
+                <div class="empty-state">
+                    <p>아직 신청한 멤버가 없습니다. 첫 번째 멤버가 되어보세요!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 멤버 데이터 저장
+        let members = [];
+
+        // 페이지 로드 시 로컬 스토리지에서 데이터 불러오기
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedMembers = localStorage.getItem('runningMembers');
+            if (savedMembers) {
+                members = JSON.parse(savedMembers);
+                updateMembersList();
+            }
+        });
+
+        // 폼 제출 처리
+        document.getElementById('apply-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value.trim();
+            const level = document.getElementById('level').value.trim();
+
+            if (name && level) {
+                // 중복 확인
+                const isDuplicate = members.some(member => member.name === name);
+                if (isDuplicate) {
+                    alert('이미 신청한 이름입니다!');
+                    return;
+                }
+
+                // 최대 인원 확인
+                const maxCount = parseInt(document.getElementById('max-count').textContent);
+                if (members.length >= maxCount) {
+                    alert('모집 인원이 마감되었습니다!');
+                    return;
+                }
+
+                // 멤버 추가
+                members.push({
+                    name: name,
+                    level: level,
+                    joinedAt: new Date().toISOString()
+                });
+
+                // 로컬 스토리지에 저장
+                localStorage.setItem('runningMembers', JSON.stringify(members));
+
+                // 목록 업데이트
+                updateMembersList();
+
+                // 폼 초기화
+                document.getElementById('apply-form').reset();
+
+                alert('신청이 완료되었습니다!');
+            }
+        });
+
+        // 멤버 목록 업데이트
+        function updateMembersList() {
+            const membersList = document.getElementById('members-list');
+            const currentCount = document.getElementById('current-count');
+            const memberCountBadge = document.getElementById('member-count-badge');
+
+            // 카운트 업데이트
+            currentCount.textContent = members.length;
+            memberCountBadge.textContent = `${members.length}명`;
+
+            if (members.length === 0) {
+                membersList.innerHTML = `
+                    <div class="empty-state">
+                        <p>아직 신청한 멤버가 없습니다. 첫 번째 멤버가 되어보세요!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // 멤버 카드 생성
+            membersList.innerHTML = members.map((member, index) => {
+                const initial = member.name.charAt(0);
+                return `
+                    <div class="member-card">
+                        <div class="member-avatar">${initial}</div>
+                        <div class="member-info">
+                            <div class="member-name">${member.name}</div>
+                            <div class="member-level">${member.level}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+    </script>
+</body>
+</html>

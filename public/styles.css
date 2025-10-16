@@ -1,0 +1,481 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* 헤더 */
+.header {
+    background: white;
+    border-radius: 20px;
+    padding: 40px 30px;
+    text-align: center;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    font-size: 36px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+}
+
+.header p {
+    color: #666;
+    font-size: 16px;
+}
+
+/* 필터 섹션 */
+.filter-section {
+    background: white;
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.filter-header h2 {
+    font-size: 18px;
+    color: #333;
+}
+
+.filter-reset {
+    background: none;
+    border: 2px solid #e9ecef;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #666;
+    transition: all 0.2s;
+}
+
+.filter-reset:hover {
+    border-color: #667eea;
+    color: #667eea;
+}
+
+.filters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-group label {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.filter-group select {
+    padding: 10px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 14px;
+    background: white;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.filter-group select:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+/* 코스 목록 */
+.courses-section {
+    margin-bottom: 20px;
+}
+
+.courses-header {
+    background: white;
+    padding: 20px 25px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.courses-header h2 {
+    font-size: 20px;
+    color: #333;
+}
+
+.courses-count {
+    display: inline-block;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* 코스 카드 */
+.course-card {
+    background: white;
+    border-radius: 16px;
+    padding: 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.course-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(102, 126, 234, 0.3);
+}
+
+.course-card.expanded {
+    grid-column: 1 / -1;
+    transform: translateY(0);
+}
+
+.course-card.closed {
+    opacity: 0.6;
+}
+
+.course-basic {
+    padding: 25px;
+    cursor: pointer;
+}
+
+.course-card.expanded .course-basic {
+    cursor: default;
+    border-bottom: 2px solid #f8f9fa;
+}
+
+.course-location {
+    display: inline-block;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.course-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.course-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.course-info-item {
+    font-size: 14px;
+    color: #666;
+}
+
+.course-info-item strong {
+    color: #333;
+}
+
+.course-participants {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.participants-bar {
+    flex: 1;
+    height: 8px;
+    background: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.participants-fill {
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    transition: width 0.3s;
+}
+
+.participants-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: #667eea;
+}
+
+.course-toggle-btn {
+    width: 100%;
+    padding: 12px;
+    background: #f8f9fa;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: #667eea;
+    transition: all 0.2s;
+}
+
+.course-toggle-btn:hover {
+    background: #667eea;
+    color: white;
+}
+
+.course-card.closed .course-toggle-btn {
+    background: #e9ecef;
+    color: #999;
+    cursor: not-allowed;
+}
+
+.course-card.closed .course-toggle-btn:hover {
+    background: #e9ecef;
+    color: #999;
+}
+
+/* 확장 콘텐츠 */
+.course-details {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.course-card.expanded .course-details {
+    max-height: 2000px;
+}
+
+.course-details-content {
+    padding: 25px;
+    background: #f8f9fa;
+}
+
+.details-section {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.details-section h3 {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.course-description {
+    color: #666;
+    line-height: 1.6;
+    font-size: 15px;
+}
+
+/* 신청 폼 */
+.apply-form {
+    display: grid;
+    gap: 15px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+    padding: 12px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.submit-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* 참가자 목록 */
+.participants-list {
+    display: grid;
+    gap: 10px;
+}
+
+.participant-item {
+    background: #f8f9fa;
+    padding: 12px 16px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.participant-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.participant-info {
+    flex: 1;
+}
+
+.participant-name {
+    font-weight: 600;
+    color: #333;
+    font-size: 15px;
+}
+
+.participant-level {
+    color: #666;
+    font-size: 13px;
+}
+
+.participant-date {
+    color: #999;
+    font-size: 12px;
+}
+
+/* 상태 표시 */
+.empty-state {
+    text-align: center;
+    padding: 30px;
+    color: #999;
+}
+
+.loading {
+    text-align: center;
+    padding: 40px;
+    color: #667eea;
+    font-size: 16px;
+}
+
+.error-state {
+    text-align: center;
+    padding: 40px;
+    color: #dc3545;
+}
+
+/* 배지 */
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.badge-closed {
+    background: #e9ecef;
+    color: #999;
+}
+
+.badge-level {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.badge-level.medium {
+    background: #fff3e0;
+    color: #e65100;
+}
+
+.badge-level.high {
+    background: #fce4ec;
+    color: #c2185b;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+    .courses-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .header h1 {
+        font-size: 28px;
+    }
+
+    .filters {
+        grid-template-columns: 1fr;
+    }
+}
